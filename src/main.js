@@ -32,10 +32,9 @@ let config = {
     },
     width: 1600,
     height: 800,
-    scene: [MainMenu, CreditsMenu, ControlsMenu, Turns, Player]
+    scene: [Load, MainMenu, CreditsMenu, ControlsMenu, Turns, Actions, Player, AI]
 }
 
-var controls;
 const SCALE = 1;
 var my = {sprite: {}, text: {}, vfx: {}, sfx: {}};
 

@@ -2,7 +2,7 @@
 class MainMenu extends Phaser.Scene {
     constructor ()
     {
-        super('mainmenu');
+        super('mainMenuScene');
     }
 
     create ()
@@ -67,7 +67,7 @@ class ControlsMenu extends Phaser.Scene {
 
         // On click go to menu scene
         this.input.once('pointerup', (event)=> {
-            this.scene.start('mainmenu');
+            this.scene.start('mainMenuScene');
         });
     }
 }
@@ -84,7 +84,7 @@ class CreditsMenu extends Phaser.Scene {
 
         // On click go to menu scene
         this.input.once('pointerup', (event)=> {
-            this.scene.start('mainmenu');
+            this.scene.start('mainMenuScene');
         });
     }
 }
