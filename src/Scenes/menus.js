@@ -73,7 +73,8 @@ class ControlsMenu extends Phaser.Scene {
 
     create(){
         // Controls Text
-        this.add.text(500, 100, `Controls\n- - - - - - -\n'W' = Jump\n'W' while in the air = Double Jump\n'A' = Move Left\n'D' = Move Right\n'Spacebar' = Dash\n\n\nClick to return to main menu`, { font: '50px Lexend', fill: '#FFFFFF'})
+        this.add.text(500, 100, `Controls\n- - - - - - -
+            Click actions and click to advance next turn`, { font: '20px Lexend', fill: '#FFFFFF'});
 
         // On click go to menu scene
         this.input.once('pointerup', (event)=> {
@@ -90,7 +91,8 @@ class CreditsMenu extends Phaser.Scene {
 
     create(){
         // Credit Text
-        this.add.text(500, 100, `Credits\n- - - - - - -\nVisuals provided by Kenny Assets through\n'1-Bit Pack'\n    (https://kenney.nl/assets/1-bit-platformer-pack)\n'Particle Pack'\n    (https://kenney.nl/assets/particle-pack)\n'UI Pack: RPG Expansion'\n    (https://kenney.nl/assets/ui-pack-rpg-expansion)\n\nMusic 'And The Journey Begins' by xDeviruchi\n     (https://xdeviruchi.itch.io/8-bit-fantasy-adventure-music-pack)\n\nSound Effects by Jade Hernandez\n\n\nClick to return to main menu`, { font: '30px Lexend', fill: '#FFFFFF'})
+        this.add.text(500, 100, `Credits\n- - - - - - -
+            Music by moodmode (https://pixabay.com/music/video-games-8-bit-air-fight-158813/)`, { font: '20px Lexend', fill: '#FFFFFF'});
 
         // On click go to menu scene
         this.input.once('pointerup', (event)=> {

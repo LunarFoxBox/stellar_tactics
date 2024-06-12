@@ -4,26 +4,19 @@ class Combat extends Phaser.Scene {
     }
 
     create() {
-        // Camera Settings
-        
-        this.cameras.main.setZoom(1);
         this.scene.run('spriteScene');
-        
-
 
         // Keeps track of who's turn it is
         this.isPlayerTurn = true;
 
         this.input.on('pointerup', ()=>{
-            console.log(my.sprite.player);
             // If it is the player's turn let them choose action
             if (this.isPlayerTurn){
-                console.log('player turn');
+                this.events.emit('clear');
                 this.scene.sleep('combatScene').run('actionsScene');
             }
             // Otherwise if it is AI's turn have AI choose action using a random number
             else{
-                console.log('AI turn');
                 let actionNumber = Phaser.Math.Between(0, 100);
                 // Heal if the roll is 20 or under, it has a heal left, and it would receive full effect of heal
                 if (actionNumber <= 20){

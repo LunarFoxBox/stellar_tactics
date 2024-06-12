@@ -16,7 +16,7 @@ class Player extends Phaser.Scene {
         this.maxDamage = 25;
 
         this.minDefenseRaise = 1;
-        this.maxDefenseRaise = 5;
+        this.maxDefenseRaise = 3;
 
         this.text = '';
     }
@@ -26,9 +26,18 @@ class Player extends Phaser.Scene {
         const actionListener = this.scene.get('actionsScene');
         const opponentListener = this.scene.get('aiScene');
 
-        // Reset player
-        actionListener.events.on('reset', ()=>{
-            this.scene.restart();
+        // Player was hit so subtract health
+        opponentListener.events.on('playerHit', (damage)=>{
+            let netDamage = damage - this.defense;
+            if (netDamage <= 0){
+                this.text = `The enemy's attack of ${damage} was completely absorbed by your shields`;
+            }
+            else{
+                this.health -= netDamage;
+                this.text = `The enemy's attack hits you for ${netDamage} damage`;
+                this.events.emit('updatePlayerHealth', this.health);
+            }
+            this.events.emit('message', this.text);
         });
 
         actionListener.events.on('playerAttack', ()=>{
@@ -42,30 +51,27 @@ class Player extends Phaser.Scene {
             }
         });
 
-        // Player was hit so subtract health
-        opponentListener.events.on('playerHit', (damage)=>{
-            this.health -= damage - this.defense;
-            this.text = `The enemy's attack hits you for ${damage} damage`;
-            this.events.emit('message', this.text);
-        });
 
         // Player heals themselves so subtract a heal use and restore health
         // Returns true if they were able to heal and false otherwise
         actionListener.events.on('playerHeal', ()=>{
-            let hasHealed = false;
             // If they have a use of heal left then heal
             if (this.healsLeft > 0){
+                // Heal and if go over set Health to max Health
                 this.health += this.healAmount;
+                if (this.health > this.maxHealth){this.health = this.maxHealth}
+
+                // -1 remaining heals and send emits to display
                 this.healsLeft--;
-                hasHealed = true;
                 this.text = `Repair Successful - You recovered ${this.healAmount} Health`;
+                this.events.emit('updatePlayerHealth', this.health);
             }
             // Otherwise display that they could not heal
             else{
                 this.text = `Repair Unsuccessful - You have no Repairs remaining`;
+                
             }
             this.events.emit('message', this.text);
-            return hasHealed;
         });
 
         // Player raises their defense
@@ -74,6 +80,11 @@ class Player extends Phaser.Scene {
             this.defense += defense;
             this.text = `You raised your shields by ${defense} to ${this.defense}`;
             this.events.emit('message', this.text);
+            this.events.emit('updatePlayerDefense', this.defense);
         });
+
+        this.scene.get('endingScene').events.on('reset', ()=>{
+            this.init();
+        })
     }
 }

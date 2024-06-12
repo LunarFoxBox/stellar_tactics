@@ -10,8 +10,11 @@ class Load extends Phaser.Scene {
 
         this.load.image('playerShip', 'playerShip.png');
         this.load.image('enemyShip', 'enemyShip.png');
+
+        this.load.audio('theme', '8-bit-air-fight.mp3');
     }
     create(){
+        this.scene.run('soundScene');
         this.scene.start('mainMenuScene');
     }
 }

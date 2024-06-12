@@ -16,7 +16,7 @@ class SimpleAI extends Phaser.Scene {
         this.maxDamage = 25;
 
         this.minDefenseRaise = 1;
-        this.maxDefenseRaise = 5;
+        this.maxDefenseRaise = 3;
 
         this.text = '';
     }
@@ -25,6 +25,20 @@ class SimpleAI extends Phaser.Scene {
         // Create reference variable for listening to turn scene
         let actionListener = this.scene.get('combatScene');
         let opponentListener = this.scene.get('playerScene');
+
+        opponentListener.events.on('aiHit', (damage)=>{
+            let netDamage = damage - this.defense;
+            if (netDamage <= 0){
+                this.text = `Your attack of ${damage} was completely absorbed by their shields`;
+            }
+            else{
+                this.health -= netDamage;
+                this.text = `Your attack hits the enemy for ${netDamage} damage`;
+                this.events.emit('updateAIHealth', this.health);
+            }
+            this.events.emit('message', this.text);
+        });
+        
 
         actionListener.events.on('aiAttack', ()=>{
             let dice = Phaser.Math.Between(1, 10);
@@ -37,12 +51,6 @@ class SimpleAI extends Phaser.Scene {
             }
         });
 
-        opponentListener.events.on('aiHit', (damage)=>{
-            this.health -= damage - this.defense;
-            this.text = `Your attack hits the enemy for ${damage} damage`;
-            this.events.emit('message', this.text);
-        });
-
         actionListener.events.on('aiHeal', ()=>{
             let hasHealed = false;
             // If they have a use of heal left then heal
@@ -52,6 +60,7 @@ class SimpleAI extends Phaser.Scene {
                 hasHealed = true;
                 this.text = `Enemy Repair Successful - They recovered ${this.healAmount} Health`;
                 this.events.emit('message', this.text);
+                this.events.emit('updateAIHealth', this.health);
             }
             return hasHealed;
         });
@@ -61,6 +70,11 @@ class SimpleAI extends Phaser.Scene {
             this.defense += defense;
             this.text = `The enemy has raised their shields by ${defense} to ${this.defense}`;
             this.events.emit('message', this.text);
+            this.events.emit('updateAIDefense', this.defense);
         });
+
+        this.scene.get('endingScene').events.on('reset', ()=>{
+            this.init();
+        })
     }
 }
