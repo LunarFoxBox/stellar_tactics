@@ -32,7 +32,7 @@ let config = {
     },
     width: 1600,
     height: 800,
-    scene: [Load, MainMenu, CreditsMenu, ControlsMenu, Turns, Actions, Player, AI]
+    scene: [Load, MainMenu, CreditsMenu, ControlsMenu, Combat, Display, Actions, Player, SimpleAI]
 }
 
 const SCALE = 1;
