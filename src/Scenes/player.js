@@ -23,38 +23,44 @@ class Player extends Phaser.Scene {
 
     create(){
         // Create reference variable for listening to turn scene
-        const actionListener = this.scene.get('actionsScene');
-        const opponentListener = this.scene.get('aiScene');
+        this.actionListener = this.scene.get('actionsScene');
+        this.opponentListener = this.scene.get('aiScene');
 
         // Player was hit so subtract health
-        opponentListener.events.on('playerHit', (damage)=>{
-            let netDamage = damage - this.defense;
-            if (netDamage <= 0){
+        this.opponentListener.events.on('playerHit', (damage)=>{
+            this.netDamage = damage - this.defense;
+            // If defense is equal or more than damage only send message
+            if (this.netDamage <= 0){
                 this.text = `The enemy's attack of ${damage} was completely absorbed by your shields`;
             }
+            // Otherwise subtract health and send message
             else{
-                this.health -= netDamage;
-                this.text = `The enemy's attack hits you for ${netDamage} damage`;
+                this.health -= this.netDamage;
+                this.text = `The enemy's attack hits you for ${this.netDamage} damage`;
                 this.events.emit('updatePlayerHealth', this.health);
             }
             this.events.emit('message', this.text);
         });
 
-        actionListener.events.on('playerAttack', ()=>{
-            let dice = Phaser.Math.Between(1, 10);
-            let damage = Phaser.Math.Between(this.minDamage, this.maxDamage);
-            if (dice == 1){
+        // Player is attacking
+        this.actionListener.events.on('playerAttack', ()=>{
+
+            this.dice = Phaser.Math.Between(1, 10);
+            this.damage = Phaser.Math.Between(this.minDamage, this.maxDamage);
+            // If player rolls a 1 then they miss
+            if (this.dice == 1){
                 this.events.emit('message', "Your attack misses the enemy");
             }
+            // Otherwise they hit the AI
             else{
-                this.events.emit('aiHit', damage);
+                this.events.emit('aiHit', this.damage);
             }
         });
 
 
         // Player heals themselves so subtract a heal use and restore health
         // Returns true if they were able to heal and false otherwise
-        actionListener.events.on('playerHeal', ()=>{
+        this.actionListener.events.on('playerHeal', ()=>{
             // If they have a use of heal left then heal
             if (this.healsLeft > 0){
                 // Heal and if go over set Health to max Health
@@ -75,16 +81,18 @@ class Player extends Phaser.Scene {
         });
 
         // Player raises their defense
-        actionListener.events.on('playerDefense', ()=>{
-            let defense = Phaser.Math.Between(this.minDefenseRaise, this.maxDefenseRaise);
-            this.defense += defense;
-            this.text = `You raised your shields by ${defense} to ${this.defense}`;
+        this.actionListener.events.on('playerDefense', ()=>{
+            this.defenseGain = Phaser.Math.Between(this.minDefenseRaise, this.maxDefenseRaise);
+            this.defense += this.defenseGain;
+            this.text = `You raised your shields by ${this.defenseGain} to ${this.defense}`;
             this.events.emit('message', this.text);
             this.events.emit('updatePlayerDefense', this.defense);
         });
 
+        // Reset player variables
         this.scene.get('endingScene').events.on('reset', ()=>{
             this.init();
-        })
+            //console.log(this.health);
+        });
     }
 }

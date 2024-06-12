@@ -8,56 +8,56 @@ class MainMenu extends Phaser.Scene {
     create ()
     {
         // Scaler for x
-        let scaleMod = 2.5;
+        this.scaleMod = 2.5;
 
         // Create Buttons
-        let playButton = this.add.image(0, 0, 'uiPack', 'glassPanel.png');
-        let controlsButton = this.add.image(0, 0, 'uiPack', 'glassPanel.png');
-        let creditsButton = this.add.image(0, 0, 'uiPack', 'glassPanel.png');
-        let quitButton = this.add.image(0, 0, 'uiPack', 'glassPanel.png');
+        this.playButton = this.add.image(0, 0, 'uiPack', 'glassPanel.png');
+        this.controlsButton = this.add.image(0, 0, 'uiPack', 'glassPanel.png');
+        this.creditsButton = this.add.image(0, 0, 'uiPack', 'glassPanel.png');
+        this.quitButton = this.add.image(0, 0, 'uiPack', 'glassPanel.png');
         
         // Scale Buttons
-        playButton.scaleX = scaleMod;
-        controlsButton.scaleX = scaleMod;
-        creditsButton.scaleX = scaleMod;
-        quitButton.scaleX = scaleMod;
+        this.playButton.scaleX = this.scaleMod;
+        this.controlsButton.scaleX = this.scaleMod;
+        this.creditsButton.scaleX = this.scaleMod;
+        this.quitButton.scaleX = this.scaleMod;
 
         // Create Button Text
-        let playText = this.add.text(-30, -15, `Play`, { font: '30px Lexend', fill: '#FFFFFF'});
-        let controlsText = this.add.text(-55, -15, 'Controls', {font: '30px Lexend', fill: '#FFFFFF'});
-        let creditsText = this.add.text(-50, -15, 'Credits', {font: '30px Lexend', fill: '#FFFFFF'});
-        let quitText = this.add.text(-35, -15, 'Quit', {font: '30px Lexend', fill: '#FFFFFF'});
+        this.playText = this.add.text(-30, -15, `Play`, { font: '30px Lexend', fill: '#FFFFFF'});
+        this.controlsText = this.add.text(-55, -15, 'Controls', {font: '30px Lexend', fill: '#FFFFFF'});
+        this.creditsText = this.add.text(-50, -15, 'Credits', {font: '30px Lexend', fill: '#FFFFFF'});
+        this.quitText = this.add.text(-35, -15, 'Quit', {font: '30px Lexend', fill: '#FFFFFF'});
 
         // Group objects and place them at x, y
-        this.add.container(800, 300, [ playButton, playButton, playButton, playText ]);
-        this.add.container(800, 400, [ controlsButton, controlsText ]);
-        this.add.container(800, 500, [ creditsButton, creditsText ]);
-        this.add.container(800, 600, [ quitButton, quitText ]);
+        this.add.container(800, 300, [ this.playButton, this.playButton, this.playButton, this.playText ]);
+        this.add.container(800, 400, [ this.controlsButton, this.controlsText ]);
+        this.add.container(800, 500, [ this.creditsButton, this.creditsText ]);
+        this.add.container(800, 600, [ this.quitButton, this.quitText ]);
 
         // Set the buttons to be interactive
-        playButton.setInteractive();
-        controlsButton.setInteractive();
-        creditsButton.setInteractive();
-        quitButton.setInteractive();
+        this.playButton.setInteractive();
+        this.controlsButton.setInteractive();
+        this.creditsButton.setInteractive();
+        this.quitButton.setInteractive();
 
         // If play button is clicked, start the game
-        playButton.once('pointerup', ()=> {
+        this.playButton.once('pointerup', ()=> {
             this.scene.start('displayScene');
             this.scene.start('combatScene');
         });
 
         // If controls button is clicked, show controls screen
-        controlsButton.once('pointerup', ()=> {
+        this.controlsButton.once('pointerup', ()=> {
             this.scene.start('controlsScreen');
         });
 
         // If credits button is clicked, show credits screen
-        creditsButton.once('pointerup', ()=> {
+        this.creditsButton.once('pointerup', ()=> {
             this.scene.start('creditsScreen');
         });
 
         // If quit button is clicked, quit the game
-        quitButton.once('pointerup', ()=> {
+        this.quitButton.once('pointerup', ()=> {
             // Destroy all game elements and close the window
             game.destroy(true, true);
             close();
@@ -77,7 +77,7 @@ class ControlsMenu extends Phaser.Scene {
             Click actions and click to advance next turn`, { font: '20px Lexend', fill: '#FFFFFF'});
 
         // On click go to menu scene
-        this.input.once('pointerup', (event)=> {
+        this.input.once('pointerup', ()=> {
             this.scene.start('mainMenuScene');
         });
     }
@@ -95,7 +95,7 @@ class CreditsMenu extends Phaser.Scene {
             Music by moodmode (https://pixabay.com/music/video-games-8-bit-air-fight-158813/)`, { font: '20px Lexend', fill: '#FFFFFF'});
 
         // On click go to menu scene
-        this.input.once('pointerup', (event)=> {
+        this.input.once('pointerup', ()=> {
             this.scene.start('mainMenuScene');
         });
     }

@@ -5,70 +5,79 @@ class Display extends Phaser.Scene{
 
     create(){
         // Create reference variable for listening to turn scene
-        const playerListener = this.scene.get('playerScene');
-        const aiListener = this.scene.get('aiScene');
-        const combatListener = this.scene.get('combatScene');
+        this.playerListener = this.scene.get('playerScene');
+        this.aiListener = this.scene.get('aiScene');
+        this.combatListener = this.scene.get('combatScene');
 
 
         // Scale factor for x
-        let scaleMod = 9;
+        this.scaleMod = 9;
 
         // Create Boxes
-        let messageBox = this.add.image(0, 0, 'uiPack', 'glassPanel.png');
-        let playerBox = this.add.image(0, 0, 'uiPack', 'glassPanel_projection.png');
-        let aiBox = this.add.image(0, 0, 'uiPack', 'glassPanel_projection.png');
+        this.messageBox = this.add.image(0, 0, 'uiPack', 'glassPanel.png');
+        this.playerBox = this.add.image(0, 0, 'uiPack', 'glassPanel_projection.png');
+        this.aiBox = this.add.image(0, 0, 'uiPack', 'glassPanel_projection.png');
 
 
         // Stretch Boxes
-        messageBox.scaleX = scaleMod;
-        messageBox.scaleY = scaleMod/6;
-        playerBox.scaleX = scaleMod/2;
-        playerBox.scaleY = scaleMod/6;
-        aiBox.scaleX = scaleMod/2;
-        aiBox.scaleY = scaleMod/6;
+        this.messageBox.scaleX = this.scaleMod;
+        this.messageBox.scaleY = this.scaleMod/6;
+        this.playerBox.scaleX = this.scaleMod/2;
+        this.playerBox.scaleY = this.scaleMod/6;
+        this.aiBox.scaleX = this.scaleMod/2;
+        this.aiBox.scaleY = this.scaleMod/6;
 
         // Create Box Text
-        let messageText = this.add.text(-300, -15, `Hostile ship detected...`, { font: '25px Lexend', fill: '#FFFFFF'});
-        let playerHealthText = this.add.text(-60, -40, `Health: 100%`, { font: '25px Lexend', fill: '#FFFFFF'});
-        let playerDefenseText = this.add.text(-60, 10, `Shields: 0`, { font: '25px Lexend', fill: '#FFFFFF'});
-        let aiHealthText = this.add.text(-60, -40, `Health: 100%`, { font: '25px Lexend', fill: '#FFFFFF'});
-        let aiDefenseText = this.add.text(-60, 10, `Shields: 0`, { font: '25px Lexend', fill: '#FFFFFF'});
+        this.messageText = this.add.text(-300, -15, `Hostile ship detected...`, { font: '25px Lexend', fill: '#FFFFFF'});
+        this.playerHealthText = this.add.text(-60, -40, `Health: 100%`, { font: '25px Lexend', fill: '#FFFFFF'});
+        this.playerDefenseText = this.add.text(-60, 10, `Shields: 0`, { font: '25px Lexend', fill: '#FFFFFF'});
+        this.aiHealthText = this.add.text(-60, -40, `Health: 100%`, { font: '25px Lexend', fill: '#FFFFFF'});
+        this.aiDefenseText = this.add.text(-60, 10, `Shields: 0`, { font: '25px Lexend', fill: '#FFFFFF'});
         
         // Group objects and place them at x, y
-        this.add.container(800, 725, [messageBox, messageText]);
-        this.add.container(300, 100, [playerBox, playerHealthText, playerDefenseText]);
-        this.add.container(1300, 100, [aiBox, aiHealthText, aiDefenseText]);
+        this.add.container(800, 725, [this.messageBox, this.messageText]);
+        this.add.container(300, 100, [this.playerBox, this.playerHealthText, this.playerDefenseText]);
+        this.add.container(1300, 100, [this.aiBox, this.aiHealthText, this.aiDefenseText]);
 
-
-        combatListener.events.on('clear', ()=>{
-            messageText.setText('');
+        // Clear text at bottom center
+        this.combatListener.events.on('clear', ()=>{
+            this.messageText.setText('');
         });
 
-        playerListener.events.on('message', (text)=> {
-            messageText.setText(`${text}...`);
+        // Display text at bottom center
+        this.playerListener.events.on('message', (text)=> {
+            this.messageText.setText(`${text}...`);
         });
-        playerListener.events.on('updatePlayerHealth', (newValue)=>{
-            playerHealthText.setText(`Health: ${newValue}%`);
+
+        // Update the displayed player health
+        this.playerListener.events.on('updatePlayerHealth', (newValue)=>{
+            this.playerHealthText.setText(`Health: ${newValue}%`);
             if (newValue <= 0){
                 this.events.emit('ending', 'lost');
             }
         });
-        playerListener.events.on('updatePlayerDefense', (newValue)=>{
-            playerDefenseText.setText(`Shields: ${newValue}`);
+
+        // Update the displayed player defense
+        this.playerListener.events.on('updatePlayerDefense', (newValue)=>{
+            this.playerDefenseText.setText(`Shields: ${newValue}`);
         });
 
-
-        aiListener.events.on('message', (text)=>{
-            messageText.setText(`${text}...`);
+        // Display text at bottom center
+        this.aiListener.events.on('message', (text)=>{
+            this.messageText.setText(`${text}...`);
         });
-        aiListener.events.on('updateAIHealth', (newValue)=>{
-            aiHealthText.setText(`Health: ${newValue}%`);
+        
+        // Update the displayed AI health
+        this.aiListener.events.on('updateAIHealth', (newValue)=>{
+            this.aiHealthText.setText(`Health: ${newValue}%`);
             if (newValue <= 0){
                 this.events.emit('ending', 'won');
             }
         });
-        aiListener.events.on('updateAIDefense', (newValue)=>{
-            aiDefenseText.setText(`Shields: ${newValue}`);
+
+        // Update the displayed AI defense
+        this.aiListener.events.on('updateAIDefense', (newValue)=>{
+            this.aiDefenseText.setText(`Shields: ${newValue}`);
         });
     }
 }

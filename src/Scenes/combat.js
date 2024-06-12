@@ -12,9 +12,12 @@ class Combat extends Phaser.Scene {
         this.input.on('pointerup', ()=>{
             // If it is the player's turn let them choose action
             if (this.isPlayerTurn){
+                // Clear text
                 this.events.emit('clear');
+                // Get user's input
                 this.scene.sleep('combatScene').run('actionsScene');
             }
+            
             // Otherwise if it is AI's turn have AI choose action using a random number
             else{
                 let actionNumber = Phaser.Math.Between(0, 100);
@@ -34,6 +37,8 @@ class Combat extends Phaser.Scene {
                     this.events.emit('aiAttack');
                 }
             }
+
+            // Next actor's turn
             this.isPlayerTurn = !this.isPlayerTurn;
         });
     }
