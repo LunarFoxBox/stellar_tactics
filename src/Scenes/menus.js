@@ -33,7 +33,7 @@ class MainMenu extends Phaser.Scene {
 
         // If play button is clicked, start the game
         playButton.once('pointerup', ()=> {
-            this.scene.start('platformerScene');
+            this.scene.start('turnScene');
         });
 
         // If controls button is clicked, show controls screen
@@ -56,7 +56,7 @@ class MainMenu extends Phaser.Scene {
 }
 
 // Controls Screen
-class Controls extends Phaser.Scene {
+class ControlsMenu extends Phaser.Scene {
     constructor () {
         super('controlsScreen');
     }
@@ -73,7 +73,7 @@ class Controls extends Phaser.Scene {
 }
 
 // Credits Screen
-class Credits extends Phaser.Scene {
+class CreditsMenu extends Phaser.Scene {
     constructor () {
         super('creditsScreen');
     }

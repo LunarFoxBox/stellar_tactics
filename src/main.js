@@ -30,15 +30,13 @@ let config = {
             fps: 60
         }
     },
-    width: 2240,
+    width: 1600,
     height: 800,
-    scene: [Load, Platformer]
+    scene: [MainMenu, CreditsMenu, ControlsMenu, Turns, Player]
 }
 
 var controls;
-const SCALE = 3;
-const SPRITE_SIZE = 16;
-const SECONDS = 1000;
+const SCALE = 1;
 var my = {sprite: {}, text: {}, vfx: {}, sfx: {}};
 
 const game = new Phaser.Game(config);
