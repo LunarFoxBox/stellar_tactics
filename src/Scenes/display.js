@@ -19,17 +19,17 @@ class Display extends Phaser.Scene{
         messageBox.scaleY = scaleMod/6;
 
         // Create Button Text
-        let messageText = this.add.text(-40, -15, ``, { font: '25px Lexend', fill: '#FFFFFF'});
+        let messageText = this.add.text(-240, -15, `Hostile ship detected...`, { font: '25px Lexend', fill: '#FFFFFF'});
         
         // Group objects and place them at x, y
         this.add.container(800, 725, [ messageBox, messageText ]);
 
         playerListener.events.on('message', (text)=> {
-            messageBox.setText(text);
+            messageText.setText(text);
         });
 
         aiListener.events.on('message', (text)=>{
-            console.log(`${text}...`);
+            messageText.setText(text);
         });
     }
 }

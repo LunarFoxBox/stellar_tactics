@@ -45,7 +45,7 @@ class Player extends Phaser.Scene {
         // Player was hit so subtract health
         opponentListener.events.on('playerHit', (damage)=>{
             this.health -= damage - this.defense;
-            this.text = `You are hit for ${damage} damage`;
+            this.text = `The enemy's attack hits you for ${damage} damage`;
             this.events.emit('message', this.text);
         });
 

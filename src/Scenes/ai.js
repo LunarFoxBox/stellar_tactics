@@ -39,7 +39,7 @@ class SimpleAI extends Phaser.Scene {
 
         opponentListener.events.on('aiHit', (damage)=>{
             this.health -= damage - this.defense;
-            this.text = `The enemy is hit for ${damage} damage`;
+            this.text = `Your attack hits the enemy for ${damage} damage`;
             this.events.emit('message', this.text);
         });
 
