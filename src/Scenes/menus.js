@@ -42,22 +42,28 @@ class MainMenu extends Phaser.Scene {
 
         // If play button is clicked, start the game
         this.playButton.once('pointerup', ()=> {
+            my.sfx.selectSound.play();
+            this.scene.run('spriteScene');
+            this.scene.start('vfxScene');
             this.scene.start('displayScene');
             this.scene.start('combatScene');
         });
 
         // If controls button is clicked, show controls screen
         this.controlsButton.once('pointerup', ()=> {
+            my.sfx.selectSound.play();
             this.scene.start('controlsScreen');
         });
 
         // If credits button is clicked, show credits screen
         this.creditsButton.once('pointerup', ()=> {
+            my.sfx.selectSound.play();
             this.scene.start('creditsScreen');
         });
 
         // If quit button is clicked, quit the game
         this.quitButton.once('pointerup', ()=> {
+            my.sfx.selectSound.play();
             // Destroy all game elements and close the window
             game.destroy(true, true);
             close();
@@ -74,10 +80,13 @@ class ControlsMenu extends Phaser.Scene {
     create(){
         // Controls Text
         this.add.text(500, 100, `Controls\n- - - - - - -
-            Click actions and click to advance next turn`, { font: '20px Lexend', fill: '#FFFFFF'});
+            Click actions and click to advance next turn
+            You can only repair twice for 40 health so make them count pilot!`,
+            { font: '20px Lexend', fill: '#FFFFFF'});
 
         // On click go to menu scene
         this.input.once('pointerup', ()=> {
+            my.sfx.selectSound.play();
             this.scene.start('mainMenuScene');
         });
     }
@@ -91,11 +100,23 @@ class CreditsMenu extends Phaser.Scene {
 
     create(){
         // Credit Text
-        this.add.text(500, 100, `Credits\n- - - - - - -
-            Music by moodmode (https://pixabay.com/music/video-games-8-bit-air-fight-158813/)`, { font: '20px Lexend', fill: '#FFFFFF'});
+        this.add.text(200, 100, `Credits\n- - - - - - -
+            Music by moodmode
+            (https://pixabay.com/music/video-games-8-bit-air-fight-158813/)
+            
+            Visuals provided by Kenney Assets
+            Packs - Sci-Fi RTS (https://kenney.nl/assets/sci-fi-rts)
+                    Space Shooter Extension (https://kenney.nl/assets/space-shooter-extension)
+                    UI Pack (Space Expansion) (https://kenney.nl/assets/ui-pack-space-expansion)
+                    Space Shooter Redux (https://kenney.nl/assets/space-shooter-redux)
+                    Particle Pack (https://kenney.nl/assets/particle-pack)
+                    
+            Sound Effects by Jade Hernandez`
+                    , { font: '30px Lexend', fill: '#FFFFFF'});
 
         // On click go to menu scene
         this.input.once('pointerup', ()=> {
+            my.sfx.selectSound.play();
             this.scene.start('mainMenuScene');
         });
     }

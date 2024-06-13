@@ -4,7 +4,7 @@ class SimpleAI extends Phaser.Scene {
     }
 
     init(){
-        this.maxHealth = 10;
+        this.maxHealth = 100;
         this.maxHeals = 2;
 
         this.health = this.maxHealth;
@@ -38,6 +38,8 @@ class SimpleAI extends Phaser.Scene {
                 this.health -= this.netDamage;
                 this.text = `Your attack hits the enemy for ${this.netDamage} damage`;
                 this.events.emit('updateAIHealth', this.health);
+                my.vfx.hit.startFollow(my.sprite.ai, 0, 0, false);
+                my.vfx.hit.start();
             }
             this.events.emit('message', this.text);
         });
@@ -52,6 +54,7 @@ class SimpleAI extends Phaser.Scene {
             }
             // Otherwise the attack hits the player
             else{
+                my.sfx.hitSound.play();
                 this.events.emit('playerHit', this.damage);
             }
         });
@@ -69,6 +72,9 @@ class SimpleAI extends Phaser.Scene {
                 // Update Display
                 this.events.emit('message', this.text);
                 this.events.emit('updateAIHealth', this.health);
+                my.vfx.repair.startFollow(my.sprite.ai, 0, 0, false);
+                my.vfx.repair.start();
+                my.sfx.repairSound.play();
             }
             return this.hasHealed;
         });
@@ -81,6 +87,7 @@ class SimpleAI extends Phaser.Scene {
             // Update Display
             this.events.emit('message', this.text);
             this.events.emit('updateAIDefense', this.defense);
+            my.sfx.shieldSound.play();
         });
 
         // Reset Variables

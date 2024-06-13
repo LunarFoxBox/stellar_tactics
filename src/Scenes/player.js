@@ -38,6 +38,8 @@ class Player extends Phaser.Scene {
                 this.health -= this.netDamage;
                 this.text = `The enemy's attack hits you for ${this.netDamage} damage`;
                 this.events.emit('updatePlayerHealth', this.health);
+                my.vfx.hit.startFollow(my.sprite.player, 0, 0, false);
+                my.vfx.hit.start();
             }
             this.events.emit('message', this.text);
         });
@@ -53,6 +55,7 @@ class Player extends Phaser.Scene {
             }
             // Otherwise they hit the AI
             else{
+                my.sfx.hitSound.play();
                 this.events.emit('aiHit', this.damage);
             }
         });
@@ -71,6 +74,9 @@ class Player extends Phaser.Scene {
                 this.healsLeft--;
                 this.text = `Repair Successful - You recovered ${this.healAmount} Health`;
                 this.events.emit('updatePlayerHealth', this.health);
+                my.vfx.repair.startFollow(my.sprite.player, 0, 0, false);
+                my.vfx.repair.start();
+                my.sfx.repairSound.play();
             }
             // Otherwise display that they could not heal
             else{
@@ -87,6 +93,7 @@ class Player extends Phaser.Scene {
             this.text = `You raised your shields by ${this.defenseGain} to ${this.defense}`;
             this.events.emit('message', this.text);
             this.events.emit('updatePlayerDefense', this.defense);
+            my.sfx.shieldSound.play();
         });
 
         // Reset player variables

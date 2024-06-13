@@ -4,8 +4,7 @@ class Combat extends Phaser.Scene {
     }
 
     create() {
-        this.scene.run('spriteScene');
-
+        // Turn based combat tracker
         // Keeps track of who's turn it is
         this.isPlayerTurn = true;
 

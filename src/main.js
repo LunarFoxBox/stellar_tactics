@@ -1,13 +1,13 @@
-// Jim Whitehead
-// Created: 4/14/2024
+// Jade Hernandez
+// Created: 6/5/2024
 // Phaser: 3.70.0
 //
-// Cubey
+// Stellar Tactics
 //
-// An example of putting sprites on the screen using Phaser
+// A turn based combat game where you try to defeat an AI opponent
 // 
-// Art assets from Kenny Assets "Shape Characters" set:
-// https://kenney.nl/assets/shape-characters
+// Art assets from Kenny Assets:
+// https://kenney.nl/assets
 
 // debug with extreme prejudice
 "use strict"
@@ -32,7 +32,7 @@ let config = {
     },
     width: 1600,
     height: 800,
-    scene: [Load, MainMenu, CreditsMenu, ControlsMenu, Ending, Combat, Display, Actions, Player, SimpleAI, Sprites, Sound]
+    scene: [Load, Background, MainMenu, CreditsMenu, ControlsMenu, Ending, Combat, Display, Actions, Player, SimpleAI, Sprites, Sound, Visuals]
 }
 
 const SCALE = 1;

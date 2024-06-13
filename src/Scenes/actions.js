@@ -35,21 +35,21 @@ class Actions extends Phaser.Scene {
 
         // If attack button is clicked, return string to indicate action
         attackButton.once('pointerup', ()=> {
-            // Store action to be read from other scenes
+            my.sfx.selectSound.play();
             this.events.emit('playerAttack');
             this.scene.resume('combatScene');
         });
 
         // If defense button is clicked, return string to indicate action
         defenseButton.once('pointerup', ()=> {
-            // Store action to be read from other scenes
+            my.sfx.selectSound.play();
             this.events.emit('playerDefense');
             this.scene.resume('combatScene');
         });
 
         // If heal button is clicked, return string to indicate action
         healButton.once('pointerup', ()=> {
-            // Store action to be read from other scenes
+            my.sfx.selectSound.play();
             this.events.emit('playerHeal');
             this.scene.resume('combatScene');
         });

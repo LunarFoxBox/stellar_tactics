@@ -60,6 +60,8 @@ class Display extends Phaser.Scene{
         // Update the displayed player defense
         this.playerListener.events.on('updatePlayerDefense', (newValue)=>{
             this.playerDefenseText.setText(`Shields: ${newValue}`);
+            my.vfx.shield.startFollow(my.sprite.player, 0, 0, false);
+            my.vfx.shield.start();
         });
 
         // Display text at bottom center
@@ -78,6 +80,8 @@ class Display extends Phaser.Scene{
         // Update the displayed AI defense
         this.aiListener.events.on('updateAIDefense', (newValue)=>{
             this.aiDefenseText.setText(`Shields: ${newValue}`);
+            my.vfx.shield.startFollow(my.sprite.ai, 0, 0, false);
+            my.vfx.shield.start();
         });
     }
 }
