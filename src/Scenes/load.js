@@ -4,6 +4,9 @@ class Load extends Phaser.Scene {
     }
 
     preload(){
+        this.add.text(600, 200,
+            `Loading\nPlease Wait`, { font: '40px Lexend', fill: '#FFFFFF'});
+
         this.load.setPath('./assets/');
 
         this.load.atlasXML("uiPack", "uipackSpace_sheet.png", "uipackSpace_sheet.xml");
@@ -17,7 +20,9 @@ class Load extends Phaser.Scene {
 
         // Load tiles
         this.load.image("tilemap_tiles", "scifi_tilesheet.png");  // Packed tilemap
+
         this.load.tilemapTiledJSON("background", "background.tmj");   // Tilemap in JSON
+
         // Load the tilemap as a spritesheet
         this.load.spritesheet("tilemap_sheet", "scifi_tilesheet.png", {
             frameWidth: 64,

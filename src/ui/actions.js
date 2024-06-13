@@ -24,9 +24,9 @@ class Actions extends Phaser.Scene {
         let healText = this.add.text(-40, -15, 'Repair', {font: '25px Lexend', fill: '#FFFFFF'});
 
         // Group objects and place them at x, y
-        this.add.container(500, 600, [ attackButton, attackText ]);
-        this.add.container(800, 600, [ defenseButton, defenseTextTop, defenseTextBottom ]);
-        this.add.container(1100, 600, [ healButton, healText ]);
+        this.add.container(500, 600, [attackButton, attackText]);
+        this.add.container(800, 600, [defenseButton, defenseTextTop, defenseTextBottom]);
+        this.add.container(1100, 600, [healButton, healText]);
 
         // Set the buttons to be interactive
         attackButton.setInteractive();

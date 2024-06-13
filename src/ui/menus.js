@@ -10,6 +10,9 @@ class MainMenu extends Phaser.Scene {
         // Scaler for x
         this.scaleMod = 2.5;
 
+        // Title Box
+        this.titleBox = this.add.image(0, 0, 'uiPack', 'glassPanel.png');
+
         // Create Buttons
         this.playButton = this.add.image(0, 0, 'uiPack', 'glassPanel.png');
         this.controlsButton = this.add.image(0, 0, 'uiPack', 'glassPanel.png');
@@ -21,18 +24,21 @@ class MainMenu extends Phaser.Scene {
         this.controlsButton.scaleX = this.scaleMod;
         this.creditsButton.scaleX = this.scaleMod;
         this.quitButton.scaleX = this.scaleMod;
+        this.titleBox.scaleX = this.scaleMod * 2;
 
         // Create Button Text
         this.playText = this.add.text(-30, -15, `Play`, { font: '30px Lexend', fill: '#FFFFFF'});
         this.controlsText = this.add.text(-55, -15, 'Controls', {font: '30px Lexend', fill: '#FFFFFF'});
         this.creditsText = this.add.text(-50, -15, 'Credits', {font: '30px Lexend', fill: '#FFFFFF'});
         this.quitText = this.add.text(-35, -15, 'Quit', {font: '30px Lexend', fill: '#FFFFFF'});
+        this.titleText = this.add.text(-100, -15, 'Stellar Tactics', {font: '30px Lexend', fill: '#FFFFFF'});
 
         // Group objects and place them at x, y
-        this.add.container(800, 300, [ this.playButton, this.playButton, this.playButton, this.playText ]);
-        this.add.container(800, 400, [ this.controlsButton, this.controlsText ]);
-        this.add.container(800, 500, [ this.creditsButton, this.creditsText ]);
-        this.add.container(800, 600, [ this.quitButton, this.quitText ]);
+        this.add.container(800, 100, [this.titleBox, this.titleText]);
+        this.add.container(800, 300, [this.playButton, this.playButton, this.playButton, this.playText]);
+        this.add.container(800, 400, [this.controlsButton, this.controlsText]);
+        this.add.container(800, 500, [this.creditsButton, this.creditsText]);
+        this.add.container(800, 600, [this.quitButton, this.quitText]);
 
         // Set the buttons to be interactive
         this.playButton.setInteractive();
